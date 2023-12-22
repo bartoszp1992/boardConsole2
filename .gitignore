@@ -1,0 +1,11 @@
+testers.ods
+
+boardConsoleFirmware2/Release/Drivers
+boardConsoleFirmware2/Release/FreeRTOS
+boardConsoleFirmware2/Release/Src
+boardConsoleFirmware2/Release/Startup
+
+boardConsoleFirmware2/Debug
+
+
+boardConsoleFirmware2/.settings/language.settings.xml

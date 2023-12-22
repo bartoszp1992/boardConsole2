@@ -1,0 +1,10 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "boardConsoleLib")(type "KiCad")(uri "${KIPRJMOD}/boardConsoleLib.pretty")(options "")(descr ""))
+  (lib (name "BartLib_Display")(type "KiCad")(uri "${KIPRJMOD}/BartLib/BartLib_Display.pretty")(options "")(descr ""))
+  (lib (name "BartLib_CathodeProtection")(type "KiCad")(uri "${KIPRJMOD}/BartLib/BartLib_CathodeProtection.pretty")(options "")(descr ""))
+  (lib (name "BartLib_Logo")(type "KiCad")(uri "${KIPRJMOD}/BartLib/BartLib_Logo.pretty")(options "")(descr ""))
+  (lib (name "BartLib_Connector")(type "KiCad")(uri "${KIPRJMOD}/BartLib/BartLib_Connector.pretty")(options "")(descr ""))
+  (lib (name "BartLib_GPS")(type "KiCad")(uri "${KIPRJMOD}/BartLib/BartLib_GPS.pretty")(options "")(descr ""))
+  (lib (name "BartLib_Capacitor")(type "KiCad")(uri "${KIPRJMOD}/BartLib_Capacitor.pretty")(options "")(descr ""))
+)

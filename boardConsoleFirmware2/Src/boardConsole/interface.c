@@ -6,23 +6,23 @@
  */
 
 /*
-  	Board Console Interface
-    Copyright (C) 2023  Bartosz Pracz
+ Board Console Interface
+ Copyright (C) 2023  Bartosz Pracz
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    Copy of license is available in repository main folder
+ Copy of license is available in repository main folder
  */
 
 #include <boardConsole/interface.h>
@@ -72,6 +72,10 @@ static void interface_draw_trim(interface_TypeDef *interface);
 static void interface_draw_motohours(interface_TypeDef *interface);
 
 static void interface_draw_settings(interface_TypeDef *interface);
+
+void interface_splash(interface_TypeDef *interface) {
+
+}
 
 void interface_init(interface_TypeDef *interface) {
 
@@ -152,26 +156,62 @@ static void interface_draw_speedo(interface_TypeDef *interface) {
 	nmea0183_retval(&gps, NMEA0183_FRAME_SPEED,
 	NMEA0183_PARAM_SPEED, gpsSpeed, 6);
 
-	if (gpsSpeed[2] == '.') { //speed > 9, e.g. 22.04
+//		sprintf(gpsSpeed, "1.00"); //debug
+
+
+	if (gpsSpeed[1] == '\0') {
 		memcpy(
 				&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X],
-				gpsSpeed, 2);
-		memcpy(
-				&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
-						+ 3], gpsSpeed + 3, 2);
-	} else if (gpsSpeed[1] == '.') { //speed < 10 e.g. 1.05
-		memcpy(
-				&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
-						+ 1], gpsSpeed, 2);
-		memcpy(
-				&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
-						+ 3], gpsSpeed + 2, 2);
+				"--.--", 5);
+
+	} else {
+
+
+		if (menu_itemReadValue(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+		SETTINGS_SPEEDO_UNIT_LEVEL) == 2) {
+
+			//recount knots to kmh
+
+			float speed = atof(gpsSpeed);
+
+			speed *= 1.852;
+
+			snprintf(gpsSpeed, sizeof(gpsSpeed), "%.2f", speed);
+
+		}
+
+		if (gpsSpeed[2] == '.') { //speed > 9, e.g. 22.04
+			memcpy(
+					&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X],
+					gpsSpeed, 2);
+			memcpy(
+					&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
+							+ 3], gpsSpeed + 3, 2);
+		} else if (gpsSpeed[1] == '.') { //speed < 10 e.g. 1.05
+			memcpy(
+					&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
+							+ 1], gpsSpeed, 2);
+			memcpy(
+					&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
+							+ 3], gpsSpeed + 2, 2);
+		}
 	}
-	memcpy(
-			&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
-					+ 5], "kn", 2);
+	if (menu_itemReadValue(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+	SETTINGS_SPEEDO_UNIT_LEVEL) == 1) {
+		memcpy(
+				&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
+						+ 5], "kn", 2);
+	} else if (menu_itemReadValue(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+	SETTINGS_SPEEDO_UNIT_LEVEL) == 2) {
+		memcpy(
+				&interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X
+						+ 5], "kmh", 3);
+
+	}
+
 	interface->framebuffer[INTERFACE_POS_SPEEDO_Y][INTERFACE_POS_SPEEDO_X + 2] =
 			'.';
+
 }
 static void interface_draw_tacho_digital(interface_TypeDef *interface) {
 	uint32_t rpm = tachometer_read(&tacho);
@@ -371,7 +411,8 @@ static void interface_draw_temperature(interface_TypeDef *interface) {
 
 	uint32_t tempADCLL = adconv_getValue(&adConv, ADCONV_CH_TEMP);
 
-	int32_t temperatureLL = __LL_ADC_CALC_TEMPERATURE(3300, tempADCLL, LL_ADC_RESOLUTION_12B);
+	int32_t temperatureLL = __LL_ADC_CALC_TEMPERATURE(3300, tempADCLL,
+			LL_ADC_RESOLUTION_12B);
 
 	uint32_t temperatureInt = temperatureLL
 			+ menu_itemReadValue(&settingsMenu, SETTINGS_TEMP_OFFSET_ENTRY,
@@ -447,7 +488,7 @@ static void interface_draw_fuel(interface_TypeDef *interface) {
 //	if (fuelAdc < 0)
 //		fuelAdc = 0;
 
-	////////////////////////////////////////////////
+////////////////////////////////////////////////
 	uint16_t adcReading = adconv_getValue(&adConv, ADCONV_CH_FUEL);
 
 	uint8_t reversedFlag = menu_itemReadValue(&settingsMenu,
@@ -471,9 +512,9 @@ static void interface_draw_fuel(interface_TypeDef *interface) {
 	if (fuelPercent < 0)
 		fuelPercent = 0;
 
-	////////////////////////////////////
+////////////////////////////////////
 
-	//convert to 0-6
+//convert to 0-6
 	uint8_t fuel = fuelPercent / 15;
 
 	char buffer[7] = "\1      ";

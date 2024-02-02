@@ -109,6 +109,7 @@ void interface_init(interface_TypeDef* interface);
 void interface_swipeScreen(interface_TypeDef* interface, uint8_t direction);
 void interface_switchScreen(interface_TypeDef* interface, uint8_t screen);
 void interface_display(interface_TypeDef* interface);
+void interface_splash(interface_TypeDef *interface);
 
 
 #endif /* INTERFACE_H_ */

@@ -4,11 +4,6 @@
  *  Created on: Oct 12, 2023
  *      Author: bartosz
  *
- *      to do:
- *      zapis następujących parametrów do eeprom:
- *      mnożnik i offset trymu, pomiaru paliwa
- *      strefa czasowa(do zegarka GPS)
- *      kalibracja temperatury
  *
  *
  *      DISPLAY/DELAY-US- TIM17
@@ -16,27 +11,30 @@
  *      TACHO- TIM2
  *      BACKLIGHT- TIM3
  *
+ *      changelog:
+ *      v2.1- add unit setting
+ *
  *
  */
 
 /*
-  	Board Console Main launcher
-    Copyright (C) 2023  Bartosz Pracz
+ Board Console Main launcher
+ Copyright (C) 2023  Bartosz Pracz
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    Copy of license is available in repository main folder
+ Copy of license is available in repository main folder
  */
 
 #include <boardConsole/boardconsoleapp.h>
@@ -64,6 +62,8 @@ void buttonsTask(void *pvPremeters);
 void brightnessTask(void *pvPremeters);
 void lowFuelAlertTask(void *pvPremeters);
 
+void playSplash(void);
+
 void readConfigFromEEPROM(void);
 void writeConfigToEEPROM(void);
 
@@ -89,9 +89,11 @@ void boardComputer_process(void) {
 	LCD_Locate(0, 0);
 	LCD_String("Board Computer");
 	LCD_Locate(0, 1);
-	LCD_String("V2");
+	LCD_String("V2.1");
 	HAL_Delay(1000);
 	LCD_Cls();
+
+//	playSplash();
 
 //										GPS
 //	nmea0183_init_poll(&gps, &huart1);
@@ -172,6 +174,11 @@ void boardComputer_process(void) {
 	MENU_NONE,
 	MENU_NONE);
 
+	menu_itemInit(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+	SETTINGS_SPEEDO_UNIT_LEVEL, ">speedo unit", 1, 2, MENU_NONE,
+	MENU_NONE,
+	MENU_NONE);
+
 //										EEPROM CLEAR
 
 	uint8_t buttons = buttons_read();
@@ -233,21 +240,22 @@ void boardComputer_process(void) {
 	//										SCHEDULER
 
 	if (xTaskCreate(displayTask, ">DISPLAY", 200, NULL, PRIORITY_DISPLAY,
-			&task_display)==errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
+			&task_display) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 		Error_Handler();
 	if (xTaskCreate(mthDumpTask, ">MTH_DUMP", 200, NULL, PRIORITY_MTH_DUMP,
-			&task_mthDump)==errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
+			&task_mthDump) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 		Error_Handler();
 	if (xTaskCreate(buttonsTask, ">BUTTONS", 200, NULL, PRIORITY_BUTTONS,
-			&task_buttonRead)==errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
+			&task_buttonRead) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 		Error_Handler();
-	if (xTaskCreate(brightnessTask, ">BRIGHTNESS", 200, NULL, PRIORITY_BRIGHTNESS,
+	if (xTaskCreate(brightnessTask, ">BRIGHTNESS", 200, NULL,
+	PRIORITY_BRIGHTNESS,
 			&task_brightness) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 		Error_Handler();
-	if (xTaskCreate(lowFuelAlertTask, ">LOW FUEL ALERT", 200, NULL, PRIORITY_LOW_FUEL,
+	if (xTaskCreate(lowFuelAlertTask, ">LOW FUEL ALERT", 200, NULL,
+	PRIORITY_LOW_FUEL,
 			&task_lowFuelAlert) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 		Error_Handler();
-
 
 	vTaskStartScheduler();
 
@@ -257,7 +265,6 @@ void boardComputer_process(void) {
 }
 
 //										TASK DEFINES
-
 
 void displayTask(void *pvPremeters) {
 
@@ -431,6 +438,10 @@ void readConfigFromEEPROM(void) {
 	menu_itemSetValue(&settingsMenu, SETTINGS_IGN_TYPE_ENTRY,
 	SETTINGS_IGN_TYPE_LEVEL, eeprom_readByte(&eeprom, EEPROM_ADDR_IGN_TYPE));
 
+	menu_itemSetValue(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+	SETTINGS_SPEEDO_UNIT_LEVEL,
+			eeprom_readByte(&eeprom, EEPROM_ADDR_SPEED_UNIT));
+
 	//write default values if eeprom is empty
 	if (menu_itemReadValue(&settingsMenu, SETTINGS_BRIGHTNESS_ENTRY,
 	SETTINGS_BRIGHTNESS_LEVEL) == 0xFF)
@@ -487,6 +498,11 @@ void readConfigFromEEPROM(void) {
 		menu_itemSetValue(&settingsMenu, SETTINGS_IGN_TYPE_ENTRY,
 		SETTINGS_IGN_TYPE_LEVEL, SETTINGS_DEFAULT_IGN_TYPE);
 
+	if (menu_itemReadValue(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+	SETTINGS_SPEEDO_UNIT_LEVEL) == 0xFF)
+		menu_itemSetValue(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+		SETTINGS_SPEEDO_UNIT_LEVEL, SETTINGS_DEFAULT_SPEEDO_UNIT);
+
 }
 
 void writeConfigToEEPROM(void) {
@@ -534,5 +550,39 @@ void writeConfigToEEPROM(void) {
 	eeprom_writeByte(&eeprom, EEPROM_ADDR_IGN_TYPE,
 			menu_itemReadValue(&settingsMenu, SETTINGS_IGN_TYPE_ENTRY,
 			SETTINGS_IGN_TYPE_LEVEL));
+
+	eeprom_writeByte(&eeprom, EEPROM_ADDR_SPEED_UNIT,
+			menu_itemReadValue(&settingsMenu, SETTINGS_SPEEDO_UNIT_ENTRY,
+					SETTINGS_SPEEDO_UNIT_LEVEL));
 }
 
+
+//void playSplash(void){
+//
+//	for(float speed = 0; speed<=99; speed+=0.5){
+//
+//		char speedArray[6] = "\0\0\0\0\0\0";
+//
+//		sprintf(speedArray, 6, "%.2f", speed);
+//
+//
+//		LCD_Locate(0, 0);
+//		LCD_String(speedArray);
+//		HAL_Delay(1);
+//	}
+//
+//	for(float speed = 99; speed>0; speed-=0.5){
+//
+//		char speedArray[6] = "\0\0\0\0\0\0";
+//
+//		sprintf(speedArray, 6, "%.2f", speed);
+//
+//
+//		LCD_Locate(0, 0);
+//		LCD_String(speedArray);
+//		HAL_Delay(1);
+//
+//	}
+//
+//
+//}

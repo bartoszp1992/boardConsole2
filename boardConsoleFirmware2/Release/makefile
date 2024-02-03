@@ -66,7 +66,7 @@ main-build: boardConsoleFirmware2.elf secondary-outputs
 
 # Tool invocations
 boardConsoleFirmware2.elf boardConsoleFirmware2.map: $(OBJS) $(USER_OBJS) /home/bartosz/Documents/projekty/arm/boardConsole2/boardConsoleFirmware2/STM32G071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "boardConsoleFirmware2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"/home/bartosz/Documents/projekty/arm/boardConsole2/boardConsoleFirmware2/STM32G071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="boardConsoleFirmware2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "boardConsoleFirmware2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"/home/bartosz/Documents/projekty/arm/boardConsole2/boardConsoleFirmware2/STM32G071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="boardConsoleFirmware2.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

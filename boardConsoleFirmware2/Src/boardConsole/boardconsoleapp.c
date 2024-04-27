@@ -10,6 +10,7 @@
  *      MOTOHOURS- TIM16
  *      TACHO- TIM2
  *      BACKLIGHT- TIM3
+ *      LOW FUEL ALERT- TIM6
  *
  *      changelog:
  *      v2.1- add unit setting
@@ -60,7 +61,7 @@ void gpsGrabTask(void *pvPremeters);
 void mthDumpTask(void *pvPremeters);
 void buttonsTask(void *pvPremeters);
 void brightnessTask(void *pvPremeters);
-void lowFuelAlertTask(void *pvPremeters);
+void lowFuelAlertDisplayReInitTask(void *pvPremeters);
 
 void playSplash(void);
 
@@ -75,6 +76,7 @@ size_t freeHeap;
 void boardComputer_process(void) {
 
 //										BUZZER
+	HAL_TIM_Base_Start_IT(&htim6);
 	blinkpin_init(&buzzer, BUZZER_GPIO_Port, BUZZER_Pin);
 
 //										DISPSLAY BRIGHTNESS
@@ -119,7 +121,7 @@ void boardComputer_process(void) {
 	MENU_NONE);
 
 	menu_itemInit(&settingsMenu, SETTINGS_TEMP_OFFSET_ENTRY,
-	SETTINGS_TEMP_OFFSET_LEVEL, ">temp offset", -15, 15, MENU_NONE,
+	SETTINGS_TEMP_OFFSET_LEVEL, ">temp offset", -30, 15, MENU_NONE,
 	MENU_NONE,
 	MENU_NONE);
 
@@ -252,7 +254,7 @@ void boardComputer_process(void) {
 	PRIORITY_BRIGHTNESS,
 			&task_brightness) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 		Error_Handler();
-	if (xTaskCreate(lowFuelAlertTask, ">LOW FUEL ALERT", 200, NULL,
+	if (xTaskCreate(lowFuelAlertDisplayReInitTask, ">LOW FUEL ALERT", 200, NULL,
 	PRIORITY_LOW_FUEL,
 			&task_lowFuelAlert) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 		Error_Handler();
@@ -354,7 +356,7 @@ void buttonsTask(void *pvPremeters) {
 
 }
 
-void lowFuelAlertTask(void *pvPremeters) {
+void lowFuelAlertDisplayReInitTask(void *pvPremeters) {
 
 	TickType_t xLastWakeTime;
 	const TickType_t xPeriod = pdMS_TO_TICKS(PERIOD_LOW_FUEL);
@@ -362,6 +364,9 @@ void lowFuelAlertTask(void *pvPremeters) {
 
 	while (1) {
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+
+		LCD_Init();
+
 		uint16_t adcReading = adconv_getValue(&adConv, ADCONV_CH_FUEL);
 
 		uint8_t reversedFlag = menu_itemReadValue(&settingsMenu,
@@ -391,7 +396,7 @@ void lowFuelAlertTask(void *pvPremeters) {
 		uint8_t fuel = fuelPercent / 15;
 
 		if (fuel <= 0) {
-			blinkpin_pattern(&buzzer, 0xF0F0F0F0, 100, BLINKPIN_REPEAT_OFF);
+			blinkpin_pattern(&buzzer, 0xF0F0F0F0, 3, BLINKPIN_REPEAT_OFF);
 		}
 	}
 }

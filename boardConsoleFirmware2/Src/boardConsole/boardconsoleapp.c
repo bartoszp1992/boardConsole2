@@ -365,7 +365,7 @@ void lowFuelAlertDisplayReInitTask(void *pvPremeters) {
 	while (1) {
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-		LCD_Init();
+
 
 		uint16_t adcReading = adconv_getValue(&adConv, ADCONV_CH_FUEL);
 
@@ -380,7 +380,7 @@ void lowFuelAlertDisplayReInitTask(void *pvPremeters) {
 
 		int16_t difference = maxLevel - minLevel;
 
-		int16_t fuelPercent = ((adcReading - difference) * 100) / difference;
+		int16_t fuelPercent = ((adcReading - minLevel) * 100) / difference;
 
 		if (reversedFlag)
 			fuelPercent = 100 - fuelPercent;
@@ -398,6 +398,8 @@ void lowFuelAlertDisplayReInitTask(void *pvPremeters) {
 		if (fuel <= 0) {
 			blinkpin_pattern(&buzzer, 0xF0F0F0F0, 3, BLINKPIN_REPEAT_OFF);
 		}
+
+		LCD_Init();
 	}
 }
 

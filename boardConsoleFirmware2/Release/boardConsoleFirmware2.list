@@ -27366,120 +27366,120 @@ Disassembly of section .text:
  800dcda:	0011      	movs	r1, r2
  800dcdc:	0018      	movs	r0, r3
  800dcde:	f7fc ffad 	bl	800ac3c <xTaskDelayUntil>
- 800dce2:	f001 fe91 	bl	800fa08 <LCD_Init>
- 800dce6:	4b3d      	ldr	r3, [pc, #244]	; (800dddc <lowFuelAlertDisplayReInitTask+0x11c>)
- 800dce8:	2101      	movs	r1, #1
- 800dcea:	0018      	movs	r0, r3
- 800dcec:	f001 fa8f 	bl	800f20e <adconv_getValue>
- 800dcf0:	0002      	movs	r2, r0
- 800dcf2:	2416      	movs	r4, #22
- 800dcf4:	193b      	adds	r3, r7, r4
- 800dcf6:	801a      	strh	r2, [r3, #0]
- 800dcf8:	4b39      	ldr	r3, [pc, #228]	; (800dde0 <lowFuelAlertDisplayReInitTask+0x120>)
- 800dcfa:	2201      	movs	r2, #1
- 800dcfc:	2105      	movs	r1, #5
- 800dcfe:	0018      	movs	r0, r3
- 800dd00:	f002 f920 	bl	800ff44 <menu_itemReadValue>
- 800dd04:	0002      	movs	r2, r0
- 800dd06:	2515      	movs	r5, #21
- 800dd08:	197b      	adds	r3, r7, r5
- 800dd0a:	701a      	strb	r2, [r3, #0]
- 800dd0c:	4b34      	ldr	r3, [pc, #208]	; (800dde0 <lowFuelAlertDisplayReInitTask+0x120>)
- 800dd0e:	2201      	movs	r2, #1
- 800dd10:	2103      	movs	r1, #3
- 800dd12:	0018      	movs	r0, r3
- 800dd14:	f002 f916 	bl	800ff44 <menu_itemReadValue>
- 800dd18:	0002      	movs	r2, r0
- 800dd1a:	2612      	movs	r6, #18
- 800dd1c:	19bb      	adds	r3, r7, r6
- 800dd1e:	801a      	strh	r2, [r3, #0]
- 800dd20:	4b2f      	ldr	r3, [pc, #188]	; (800dde0 <lowFuelAlertDisplayReInitTask+0x120>)
- 800dd22:	2201      	movs	r2, #1
- 800dd24:	2104      	movs	r1, #4
- 800dd26:	0018      	movs	r0, r3
- 800dd28:	f002 f90c 	bl	800ff44 <menu_itemReadValue>
- 800dd2c:	0002      	movs	r2, r0
- 800dd2e:	2110      	movs	r1, #16
- 800dd30:	187b      	adds	r3, r7, r1
- 800dd32:	801a      	strh	r2, [r3, #0]
- 800dd34:	19bb      	adds	r3, r7, r6
- 800dd36:	881a      	ldrh	r2, [r3, #0]
- 800dd38:	187b      	adds	r3, r7, r1
- 800dd3a:	881b      	ldrh	r3, [r3, #0]
- 800dd3c:	1ad3      	subs	r3, r2, r3
- 800dd3e:	b29a      	uxth	r2, r3
- 800dd40:	210e      	movs	r1, #14
- 800dd42:	187b      	adds	r3, r7, r1
- 800dd44:	801a      	strh	r2, [r3, #0]
- 800dd46:	193b      	adds	r3, r7, r4
- 800dd48:	881a      	ldrh	r2, [r3, #0]
- 800dd4a:	187b      	adds	r3, r7, r1
- 800dd4c:	2000      	movs	r0, #0
- 800dd4e:	5e1b      	ldrsh	r3, [r3, r0]
- 800dd50:	1ad3      	subs	r3, r2, r3
- 800dd52:	2264      	movs	r2, #100	; 0x64
- 800dd54:	435a      	muls	r2, r3
- 800dd56:	187b      	adds	r3, r7, r1
- 800dd58:	2100      	movs	r1, #0
- 800dd5a:	5e5b      	ldrsh	r3, [r3, r1]
- 800dd5c:	0019      	movs	r1, r3
- 800dd5e:	0010      	movs	r0, r2
- 800dd60:	f7f2 fa78 	bl	8000254 <__divsi3>
- 800dd64:	0003      	movs	r3, r0
- 800dd66:	001a      	movs	r2, r3
- 800dd68:	211e      	movs	r1, #30
- 800dd6a:	187b      	adds	r3, r7, r1
- 800dd6c:	801a      	strh	r2, [r3, #0]
- 800dd6e:	197b      	adds	r3, r7, r5
- 800dd70:	781b      	ldrb	r3, [r3, #0]
- 800dd72:	2b00      	cmp	r3, #0
- 800dd74:	d006      	beq.n	800dd84 <lowFuelAlertDisplayReInitTask+0xc4>
- 800dd76:	187b      	adds	r3, r7, r1
- 800dd78:	881b      	ldrh	r3, [r3, #0]
- 800dd7a:	2264      	movs	r2, #100	; 0x64
- 800dd7c:	1ad3      	subs	r3, r2, r3
- 800dd7e:	b29a      	uxth	r2, r3
- 800dd80:	187b      	adds	r3, r7, r1
- 800dd82:	801a      	strh	r2, [r3, #0]
- 800dd84:	221e      	movs	r2, #30
- 800dd86:	18bb      	adds	r3, r7, r2
- 800dd88:	2100      	movs	r1, #0
- 800dd8a:	5e5b      	ldrsh	r3, [r3, r1]
- 800dd8c:	2b64      	cmp	r3, #100	; 0x64
- 800dd8e:	dd02      	ble.n	800dd96 <lowFuelAlertDisplayReInitTask+0xd6>
- 800dd90:	18bb      	adds	r3, r7, r2
- 800dd92:	2264      	movs	r2, #100	; 0x64
- 800dd94:	801a      	strh	r2, [r3, #0]
- 800dd96:	221e      	movs	r2, #30
- 800dd98:	18bb      	adds	r3, r7, r2
- 800dd9a:	2100      	movs	r1, #0
- 800dd9c:	5e5b      	ldrsh	r3, [r3, r1]
- 800dd9e:	2b00      	cmp	r3, #0
- 800dda0:	da02      	bge.n	800dda8 <lowFuelAlertDisplayReInitTask+0xe8>
- 800dda2:	18bb      	adds	r3, r7, r2
- 800dda4:	2200      	movs	r2, #0
- 800dda6:	801a      	strh	r2, [r3, #0]
- 800dda8:	231e      	movs	r3, #30
- 800ddaa:	18fb      	adds	r3, r7, r3
- 800ddac:	2200      	movs	r2, #0
- 800ddae:	5e9b      	ldrsh	r3, [r3, r2]
- 800ddb0:	210f      	movs	r1, #15
- 800ddb2:	0018      	movs	r0, r3
- 800ddb4:	f7f2 fa4e 	bl	8000254 <__divsi3>
- 800ddb8:	0003      	movs	r3, r0
- 800ddba:	b21a      	sxth	r2, r3
- 800ddbc:	210d      	movs	r1, #13
+ 800dce2:	4b3e      	ldr	r3, [pc, #248]	; (800dddc <lowFuelAlertDisplayReInitTask+0x11c>)
+ 800dce4:	2101      	movs	r1, #1
+ 800dce6:	0018      	movs	r0, r3
+ 800dce8:	f001 fa91 	bl	800f20e <adconv_getValue>
+ 800dcec:	0002      	movs	r2, r0
+ 800dcee:	2416      	movs	r4, #22
+ 800dcf0:	193b      	adds	r3, r7, r4
+ 800dcf2:	801a      	strh	r2, [r3, #0]
+ 800dcf4:	4b3a      	ldr	r3, [pc, #232]	; (800dde0 <lowFuelAlertDisplayReInitTask+0x120>)
+ 800dcf6:	2201      	movs	r2, #1
+ 800dcf8:	2105      	movs	r1, #5
+ 800dcfa:	0018      	movs	r0, r3
+ 800dcfc:	f002 f922 	bl	800ff44 <menu_itemReadValue>
+ 800dd00:	0002      	movs	r2, r0
+ 800dd02:	2515      	movs	r5, #21
+ 800dd04:	197b      	adds	r3, r7, r5
+ 800dd06:	701a      	strb	r2, [r3, #0]
+ 800dd08:	4b35      	ldr	r3, [pc, #212]	; (800dde0 <lowFuelAlertDisplayReInitTask+0x120>)
+ 800dd0a:	2201      	movs	r2, #1
+ 800dd0c:	2103      	movs	r1, #3
+ 800dd0e:	0018      	movs	r0, r3
+ 800dd10:	f002 f918 	bl	800ff44 <menu_itemReadValue>
+ 800dd14:	0002      	movs	r2, r0
+ 800dd16:	2612      	movs	r6, #18
+ 800dd18:	19bb      	adds	r3, r7, r6
+ 800dd1a:	801a      	strh	r2, [r3, #0]
+ 800dd1c:	4b30      	ldr	r3, [pc, #192]	; (800dde0 <lowFuelAlertDisplayReInitTask+0x120>)
+ 800dd1e:	2201      	movs	r2, #1
+ 800dd20:	2104      	movs	r1, #4
+ 800dd22:	0018      	movs	r0, r3
+ 800dd24:	f002 f90e 	bl	800ff44 <menu_itemReadValue>
+ 800dd28:	0002      	movs	r2, r0
+ 800dd2a:	2110      	movs	r1, #16
+ 800dd2c:	187b      	adds	r3, r7, r1
+ 800dd2e:	801a      	strh	r2, [r3, #0]
+ 800dd30:	19bb      	adds	r3, r7, r6
+ 800dd32:	881a      	ldrh	r2, [r3, #0]
+ 800dd34:	187b      	adds	r3, r7, r1
+ 800dd36:	881b      	ldrh	r3, [r3, #0]
+ 800dd38:	1ad3      	subs	r3, r2, r3
+ 800dd3a:	b29a      	uxth	r2, r3
+ 800dd3c:	200e      	movs	r0, #14
+ 800dd3e:	183b      	adds	r3, r7, r0
+ 800dd40:	801a      	strh	r2, [r3, #0]
+ 800dd42:	193b      	adds	r3, r7, r4
+ 800dd44:	881a      	ldrh	r2, [r3, #0]
+ 800dd46:	187b      	adds	r3, r7, r1
+ 800dd48:	2100      	movs	r1, #0
+ 800dd4a:	5e5b      	ldrsh	r3, [r3, r1]
+ 800dd4c:	1ad3      	subs	r3, r2, r3
+ 800dd4e:	2264      	movs	r2, #100	; 0x64
+ 800dd50:	435a      	muls	r2, r3
+ 800dd52:	183b      	adds	r3, r7, r0
+ 800dd54:	2100      	movs	r1, #0
+ 800dd56:	5e5b      	ldrsh	r3, [r3, r1]
+ 800dd58:	0019      	movs	r1, r3
+ 800dd5a:	0010      	movs	r0, r2
+ 800dd5c:	f7f2 fa7a 	bl	8000254 <__divsi3>
+ 800dd60:	0003      	movs	r3, r0
+ 800dd62:	001a      	movs	r2, r3
+ 800dd64:	211e      	movs	r1, #30
+ 800dd66:	187b      	adds	r3, r7, r1
+ 800dd68:	801a      	strh	r2, [r3, #0]
+ 800dd6a:	197b      	adds	r3, r7, r5
+ 800dd6c:	781b      	ldrb	r3, [r3, #0]
+ 800dd6e:	2b00      	cmp	r3, #0
+ 800dd70:	d006      	beq.n	800dd80 <lowFuelAlertDisplayReInitTask+0xc0>
+ 800dd72:	187b      	adds	r3, r7, r1
+ 800dd74:	881b      	ldrh	r3, [r3, #0]
+ 800dd76:	2264      	movs	r2, #100	; 0x64
+ 800dd78:	1ad3      	subs	r3, r2, r3
+ 800dd7a:	b29a      	uxth	r2, r3
+ 800dd7c:	187b      	adds	r3, r7, r1
+ 800dd7e:	801a      	strh	r2, [r3, #0]
+ 800dd80:	221e      	movs	r2, #30
+ 800dd82:	18bb      	adds	r3, r7, r2
+ 800dd84:	2100      	movs	r1, #0
+ 800dd86:	5e5b      	ldrsh	r3, [r3, r1]
+ 800dd88:	2b64      	cmp	r3, #100	; 0x64
+ 800dd8a:	dd02      	ble.n	800dd92 <lowFuelAlertDisplayReInitTask+0xd2>
+ 800dd8c:	18bb      	adds	r3, r7, r2
+ 800dd8e:	2264      	movs	r2, #100	; 0x64
+ 800dd90:	801a      	strh	r2, [r3, #0]
+ 800dd92:	221e      	movs	r2, #30
+ 800dd94:	18bb      	adds	r3, r7, r2
+ 800dd96:	2100      	movs	r1, #0
+ 800dd98:	5e5b      	ldrsh	r3, [r3, r1]
+ 800dd9a:	2b00      	cmp	r3, #0
+ 800dd9c:	da02      	bge.n	800dda4 <lowFuelAlertDisplayReInitTask+0xe4>
+ 800dd9e:	18bb      	adds	r3, r7, r2
+ 800dda0:	2200      	movs	r2, #0
+ 800dda2:	801a      	strh	r2, [r3, #0]
+ 800dda4:	231e      	movs	r3, #30
+ 800dda6:	18fb      	adds	r3, r7, r3
+ 800dda8:	2200      	movs	r2, #0
+ 800ddaa:	5e9b      	ldrsh	r3, [r3, r2]
+ 800ddac:	210f      	movs	r1, #15
+ 800ddae:	0018      	movs	r0, r3
+ 800ddb0:	f7f2 fa50 	bl	8000254 <__divsi3>
+ 800ddb4:	0003      	movs	r3, r0
+ 800ddb6:	b21a      	sxth	r2, r3
+ 800ddb8:	210d      	movs	r1, #13
+ 800ddba:	187b      	adds	r3, r7, r1
+ 800ddbc:	701a      	strb	r2, [r3, #0]
  800ddbe:	187b      	adds	r3, r7, r1
- 800ddc0:	701a      	strb	r2, [r3, #0]
- 800ddc2:	187b      	adds	r3, r7, r1
- 800ddc4:	781b      	ldrb	r3, [r3, #0]
- 800ddc6:	2b00      	cmp	r3, #0
- 800ddc8:	d184      	bne.n	800dcd4 <lowFuelAlertDisplayReInitTask+0x14>
- 800ddca:	4906      	ldr	r1, [pc, #24]	; (800dde4 <lowFuelAlertDisplayReInitTask+0x124>)
- 800ddcc:	4806      	ldr	r0, [pc, #24]	; (800dde8 <lowFuelAlertDisplayReInitTask+0x128>)
- 800ddce:	2301      	movs	r3, #1
- 800ddd0:	2203      	movs	r2, #3
- 800ddd2:	f001 fa5b 	bl	800f28c <blinkpin_pattern>
+ 800ddc0:	781b      	ldrb	r3, [r3, #0]
+ 800ddc2:	2b00      	cmp	r3, #0
+ 800ddc4:	d105      	bne.n	800ddd2 <lowFuelAlertDisplayReInitTask+0x112>
+ 800ddc6:	4907      	ldr	r1, [pc, #28]	; (800dde4 <lowFuelAlertDisplayReInitTask+0x124>)
+ 800ddc8:	4807      	ldr	r0, [pc, #28]	; (800dde8 <lowFuelAlertDisplayReInitTask+0x128>)
+ 800ddca:	2301      	movs	r3, #1
+ 800ddcc:	2203      	movs	r2, #3
+ 800ddce:	f001 fa5d 	bl	800f28c <blinkpin_pattern>
+ 800ddd2:	f001 fe19 	bl	800fa08 <LCD_Init>
  800ddd6:	e77d      	b.n	800dcd4 <lowFuelAlertDisplayReInitTask+0x14>
  800ddd8:	00007530 	.word	0x00007530
  800dddc:	20004454 	.word	0x20004454

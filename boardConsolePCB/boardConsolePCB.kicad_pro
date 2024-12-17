@@ -569,7 +569,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../mechanical/boardConsolePCB.step",
       "svg": "",
       "vrml": ""
     },

@@ -1,6 +1,14 @@
 {
   "board": {
     "3dviewports": [],
+    "design_settings": {
+      "defaults": {},
+      "diff_pair_dimensions": [],
+      "drc_exclusions": [],
+      "rules": {},
+      "track_widths": [],
+      "via_dimensions": []
+    },
     "ipc2581": {
       "dist": "",
       "distpn": "",
@@ -219,7 +227,7 @@
       "pin_to_pin": "warning",
       "power_pin_not_driven": "error",
       "similar_labels": "warning",
-      "simulation_model_issue": "error",
+      "simulation_model_issue": "ignore",
       "unannotated": "error",
       "unit_value_mismatch": "error",
       "unresolved_variable": "error",
@@ -231,7 +239,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "fletcher_GTO.kicad_pro",
+    "filename": "trimCurrentSensor.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -364,7 +372,7 @@
     },
     "net_format_name": "",
     "page_layout_descr_file": "",
-    "plot_directory": "./",
+    "plot_directory": "",
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",
     "spice_model_current_sheet_as_root": true,
@@ -376,7 +384,7 @@
   },
   "sheets": [
     [
-      "2004889a-01af-4649-ad80-0a6308b0df24",
+      "b5802636-e6b0-4c93-a38a-39b7c432edbf",
       "Root"
     ]
   ],
